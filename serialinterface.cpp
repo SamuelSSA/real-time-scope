@@ -52,6 +52,11 @@ bool SerialInterface::openSerialPort(QString name)
     return ret;
 }
 
+uint32_t SerialInterface::sendData(std::string data)
+{
+    this->write(data.c_str());
+}
+
 void SerialInterface::addDataToBuffer(const QByteArray &ba)
 {
     this->mutex.lock();

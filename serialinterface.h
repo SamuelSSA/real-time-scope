@@ -18,6 +18,7 @@ public:
     void closeSerialPort();
     void getInputData();
     bool openSerialPort(QString name);
+    uint32_t sendData(std::string data);
 
 signals:
     void newData(std::vector<uint8_t>);

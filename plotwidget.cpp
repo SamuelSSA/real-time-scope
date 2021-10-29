@@ -1,6 +1,6 @@
 #include "plotwidget.h"
 
-PlotWidget::PlotWidget(QWidget *parent) : QCustomPlot(parent)
+PlotWidget::PlotWidget(QString xlabel, QString ylabel, QWidget *parent) : QCustomPlot(parent)
 {
     // include this section to fully disable antialiasing for higher performance:
     this->setNotAntialiasedElements(QCP::aeAll);
@@ -12,8 +12,8 @@ PlotWidget::PlotWidget(QWidget *parent) : QCustomPlot(parent)
 
     // plot setup
     this->addGraph();
-    this->xAxis->setLabel("Samples");
-    this->yAxis->setLabel("Value");
+    this->xAxis->setLabel(xlabel);
+    this->yAxis->setLabel(ylabel);
     this->xAxis->setRange(-1.5, 1.5);
     this->yAxis->setRange(-1.5, 1.5);
     this->xAxis->grid()->setSubGridVisible(true);

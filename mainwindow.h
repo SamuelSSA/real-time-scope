@@ -27,7 +27,7 @@ class MainWindow : public QMainWindow
         void plotExample();
 
         std::vector<uint32_t *> uintData;
-        QVector<double> x0;
+        QVector<QVector<double>> x0;
         InputManager inputManager;
 
         UDPInterface *udpIface;

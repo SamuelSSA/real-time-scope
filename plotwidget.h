@@ -9,7 +9,7 @@ class PlotWidget : public QCustomPlot
     Q_OBJECT
       
     public:
-        explicit PlotWidget(QWidget *parent = 0);
+        explicit PlotWidget(QString xlabel = "Samples", QString ylabel = "Magnitude", QWidget *parent = 0);
         ~PlotWidget();
 
         void setMargins(int minx, int maxx, int miny, int maxy);

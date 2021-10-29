@@ -27,9 +27,33 @@ QMainWindow(parent)
     this->connect(buttonBoxSerial, &QDialogButtonBox::accepted, this, &MainWindow::connectSerial);
     this->connect(buttonBoxSerial, &QDialogButtonBox::rejected, this, &MainWindow::disconnectSerial);
 
-    for(uint32_t i =0; i < (SAMPLES); i++)
+
+    constexpr float _bw_chirp = 500e6;
+    constexpr float _t_chirp = 0.125;
+    constexpr float _c = 3e8;
+
+
+    const float dist_rb =  (16 * (_t_chirp/2) * _c)/ (2 * _bw_chirp);
+
+    x0.append(QVector<double>());
+    x0.append(QVector<double>());
+    x0.append(QVector<double>());
+
+    for(int i = 0; i < GRAPHS; i++)
     {
-        x0.append(i);
+        x0.append(QVector<double>());
+        for(uint32_t j =0; j < (SAMPLES); j++)
+        {
+            //if((i == 2) || (i == 3))
+            if(1)
+            {
+                x0[i].append((SAMPLES*i + j)*dist_rb);
+            }
+            else
+            {
+                x0[i].append(j);
+            }
+        }
     }
 }
 
@@ -59,7 +83,7 @@ void MainWindow::plotSerialData()
             {
                 yData[i].reserve(SAMPLES);
                 std::copy(data_packet.data_output[i], data_packet.data_output[i] + SAMPLES, std::back_inserter(yData[i]));
-                plotWidgets[i]->graph(0)->setData(x0,yData[i],true);
+                plotWidgets[i]->graph(0)->setData(x0[i],yData[i],true);
                 plotWidgets[i]->replot();
             }
             last_time = QTime::currentTime();
@@ -81,7 +105,7 @@ void MainWindow::plotUdpData()
             yData[i].reserve(buffer.size());
             std::copy(buffer.begin(), buffer.end(), std::back_inserter(yData[i]));
 
-            plotWidgets[i]->graph(0)->setData(x0,yData[i],true);
+            plotWidgets[i]->graph(0)->setData(x0[i],yData[i],true);
             plotWidgets[i]->replot();
         }
     }
@@ -243,7 +267,11 @@ void MainWindow::setupWidgets()
 
     for(int i=0; i < N_SCOPES; i++)
     {
-        plotWidgets.append(new PlotWidget());
+        if((i == 2) || (i == 3))
+            plotWidgets.append(new PlotWidget("Distância[metros]","Magnitude"));
+        else
+            plotWidgets.append(new PlotWidget());
+
         plotsLayout->addWidget(plotWidgets[i]);
         //plotWidgets[i]->setMargins(0, N_SAMPLES, 0, qPow(2,N_BITS-1)-1);
         plotWidgets[i]->setMargins(0, N_SAMPLES, -100, 5);

@@ -82,6 +82,17 @@ public:
         this->mutex.unlock();
     }
 
+    uint8_t* requestRawPtr()
+    {
+        uint8_t *raw_ptr = nullptr;
+
+        if(this->rawBuffer.size() > 0)
+        {
+            raw_ptr = this->rawBuffer.data();
+        }
+        return raw_ptr;
+    }
+
     std::vector<uint8_t> requestRawData(uint32_t size)
     {
         this->mutex.lock();

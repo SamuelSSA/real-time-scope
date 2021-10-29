@@ -14,6 +14,15 @@ struct DATA_PACKET
     char end_of_packet[4];
 };
 
+struct COMMAND
+{
+    char cmd_init[4];
+    char code[4];
+    uint32_t integer_value;
+    float float_value;
+    char end_of_cmd[4];
+};
+
 class EncoderDecoder : public QObject
 {
     Q_OBJECT
