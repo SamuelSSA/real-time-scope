@@ -39,21 +39,27 @@ QMainWindow(parent)
     x0.append(QVector<double>());
     x0.append(QVector<double>());
 
+    int l = 0;
     for(int i = 0; i < GRAPHS; i++)
     {
         x0.append(QVector<double>());
+        int k = 0;
         for(uint32_t j =0; j < (SAMPLES); j++)
         {
-            //if((i == 2) || (i == 3))
-            if(1)
+            if((i == 2) || (i == 3))
+            //if(1)
             {
-                x0[i].append((SAMPLES*i + j)*dist_rb);
+                //x0[i].append((SAMPLES*i + j)*dist_rb);
+                x0[i].append((SAMPLES*l + k)*dist_rb);
+                k++;
             }
             else
             {
                 x0[i].append(j);
             }
         }
+        if((i == 2) || (i == 3))
+            l++;
     }
 }
 
@@ -282,9 +288,9 @@ void MainWindow::setupWidgets()
 
     // Footer Box
     QGroupBox *footerBox = new QGroupBox();
-    QGroupBox *textEditBox = new QGroupBox(tr("Messages"));
-    QGroupBox *netConfBox = new QGroupBox(tr("Network Configuration"));
-    QGroupBox *serialConfBox = new QGroupBox(tr("Serial Configuration"));
+    QGroupBox *textEditBox = new QGroupBox(tr("Mensagens"));
+    QGroupBox *netConfBox = new QGroupBox(tr("Configuração de Rede"));
+    QGroupBox *serialConfBox = new QGroupBox(tr("Configuração Serial"));
     QGridLayout *footerLayout = new QGridLayout();
     
     footerLayout->addWidget(textEditBox, 0, 0);
@@ -305,8 +311,8 @@ void MainWindow::setupWidgets()
     QGroupBox *netBox = new QGroupBox(this);
     buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok
                                      | QDialogButtonBox::Cancel);
-    buttonBox->button(QDialogButtonBox::Ok)->setText("Connect");
-    buttonBox->button(QDialogButtonBox::Cancel)->setText("Disconnect");
+    buttonBox->button(QDialogButtonBox::Ok)->setText("Conectar");
+    buttonBox->button(QDialogButtonBox::Cancel)->setText("Disconectar");
     buttonBox->setCenterButtons(true);
 
 
@@ -317,9 +323,9 @@ void MainWindow::setupWidgets()
     portLineEdit->setMaximumWidth(150);
 
     QGridLayout *gridlayout = new QGridLayout;
-    gridlayout->addWidget(new QLabel(tr("IP Address")), 0, 0);
+    gridlayout->addWidget(new QLabel(tr("Endereço IP")), 0, 0);
     gridlayout->addWidget(ipLineEdit, 0, 1);
-    gridlayout->addWidget(new QLabel(tr("Port Number")), 1, 0);
+    gridlayout->addWidget(new QLabel(tr("Porta")), 1, 0);
     gridlayout->addWidget(portLineEdit, 1, 1);
     gridlayout->setVerticalSpacing(5);
 
@@ -330,8 +336,8 @@ void MainWindow::setupWidgets()
 
     buttonBoxSerial = new QDialogButtonBox(QDialogButtonBox::Ok
                                      | QDialogButtonBox::Cancel);
-    buttonBoxSerial->button(QDialogButtonBox::Ok)->setText("Open");
-    buttonBoxSerial->button(QDialogButtonBox::Cancel)->setText("Close");
+    buttonBoxSerial->button(QDialogButtonBox::Ok)->setText("Abrir");
+    buttonBoxSerial->button(QDialogButtonBox::Cancel)->setText("Fechar");
     buttonBoxSerial->setCenterButtons(true);
 
 
@@ -341,7 +347,7 @@ void MainWindow::setupWidgets()
     }
 
     QGridLayout *serialGridLayout = new QGridLayout;
-    serialGridLayout->addWidget(new QLabel(tr("Serial Port")),0,0);
+    serialGridLayout->addWidget(new QLabel(tr("Porta Serial")),0,0);
     serialGridLayout->addWidget(serialPortBox,0,1);
     serialGridLayout->setHorizontalSpacing(5);
 
