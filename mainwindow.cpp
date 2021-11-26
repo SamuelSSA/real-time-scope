@@ -89,7 +89,12 @@ void MainWindow::plotSerialData()
             {
                 yData[i].reserve(SAMPLES);
                 std::copy(data_packet.data_output[i], data_packet.data_output[i] + SAMPLES, std::back_inserter(yData[i]));
-                plotWidgets[i]->graph(0)->setData(x0[i],yData[i],true);
+
+                if((i == 0) || (i == 1))
+                    plotWidgets[i]->graph(0)->setData(x0[i],yData[i],true);
+                else
+                    plotWidgets[i]->graph(0)->setData(x0[i],yData[i],true);
+
                 plotWidgets[i]->replot();
             }
             last_time = QTime::currentTime();
@@ -274,9 +279,9 @@ void MainWindow::setupWidgets()
     for(int i=0; i < N_SCOPES; i++)
     {
         if((i == 2) || (i == 3))
-            plotWidgets.append(new PlotWidget("Distância[metros]","Magnitude"));
+            plotWidgets.append(new PlotWidget("Distância[metros]","Magnitude[Volts]"));
         else
-            plotWidgets.append(new PlotWidget());
+            plotWidgets.append(new PlotWidget("Amostras", "Magnitude[Volts]"));
 
         plotsLayout->addWidget(plotWidgets[i]);
         //plotWidgets[i]->setMargins(0, N_SAMPLES, 0, qPow(2,N_BITS-1)-1);
